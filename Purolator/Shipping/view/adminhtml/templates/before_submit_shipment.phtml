@@ -1,0 +1,163 @@
+<?php
+/** @var \Purolator\Shipping\Block\Adminhtml\ChangeOrigin $block */
+$settings = $block->getOriginSettings();
+$countryCollection = $settings['countryCollection'];
+$regionCollection = $block->getRegionCollection();
+$currentRegion = null;
+$currentCountryId = $settings['country']->getId() !== null ? $settings['country']->getId() : 'US';
+$regionDictionary = [];
+
+foreach ($regionCollection as $region) {
+    if ($region->getData('region_id') === $settings['regionId']) {
+        $currentRegion = $region;
+    }
+
+    $regionDictionary[] = [
+        'value' => $region->getData('region_id'),
+        'label' => $region->getData('name'),
+        'country_id' => $region->getData('country_id'),
+    ];
+}
+
+$countryDictionary = [];
+
+foreach ($countryCollection as $country) {
+    $countryDictionary[] = [
+        'value' => $country->getTwoLetterAbbreviation(),
+        'label' => $country->getFullNameLocale(),
+        'is_region_visible' => true,
+    ];
+}
+
+?>
+<br>
+
+<div id="m2-component" data-bind="scope:'shippingAddress'" style="max-width: 500px;">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+
+    <script type="text/x-magento-init">
+    {
+        "#m2-component": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "shippingAddress": {
+                        "component": "Purolator_Shipping/js/address-changer",
+                        "template": "Purolator_Shipping/address-changer",
+                        "provider": "orderProvider",
+                        "children": {
+                            "form-fields":{
+                                "component":"uiComponent","displayArea":"m2kocomponent2","children": {
+                                    "country_id": {
+                                        "component":"Magento_Ui/js/form/element/select",
+                                        "config":{
+                                            "customScope":"shippingAddress",
+                                            "template":"ui/form/field",
+                                            "elementTmpl":"ui/form/element/select"
+                                        },
+                                        "dataScope":"shippingAddress.country_id",
+                                        "label":"Country",
+                                        "provider":"orderProvider",
+                                        "sortOrder":2,
+                                        "validation":{"required-entry":true},
+                                        "filterBy":null,
+                                        "customEntry":null,
+                                        "visible":true,
+                                        "imports":{
+                                            "initialOptions":"index = orderProvider:dictionaries.country_id",
+                                            "setOptions":"index = orderProvider:dictionaries.country_id"
+                                        },
+                                        "value":"<?php echo $currentCountryId; ?>"
+                                    },
+                                    "postcode": {
+                                        "component":"Magento_Ui/js/form/element/post-code",
+                                        "config": {
+                                            "customScope":"shippingAddress",
+                                            "template":"ui/form/field",
+                                            "elementTmpl":"ui/form/element/input"
+                                        },
+                                        "dataScope":"shippingAddress.postcode",
+                                        "label":"Zip/Postal Code",
+                                        "provider":"orderProvider",
+                                        "sortOrder":"4",
+                                        "validation":{"required-entry":true},
+                                        "filterBy":null,
+                                        "customEntry":null,
+                                        "visible":true
+                                    },
+                                    "region_id": {
+                                        "component":"Magento_Ui/js/form/element/region",
+                                        "config": {
+                                            "customScope":"shippingAddress",
+                                            "template":"ui/form/field",
+                                            "elementTmpl":"ui/form/element/select",
+                                            "customEntry":"shippingAddress.region"
+                                        },
+                                        "validation":{"required-entry":true},
+                                        "filterBy":{"target":"orderProvider:shippingAddress.country_id","field":"country_id"},
+                                        "imports":{
+                                            "initialOptions":"index = orderProvider:dictionaries.region_id",
+                                            "setOptions":"index = orderProvider:dictionaries.region_id"
+                                        },
+                                        "parentName": "shippingAddress",
+                                        "dataScope":"shippingAddress.region_id",
+                                        "label":"State/Province",
+                                        "provider":"orderProvider",
+                                         "value":"<?php echo $currentRegion->getId(); ?>",
+                                        "sortOrder":"3","validation":{"required-entry":true}
+                                    },
+                                    "city": {
+                                        "component":"Magento_Ui/js/form/element/abstract",
+                                        "config": {
+                                            "customScope":"shippingAddress",
+                                            "template":"ui/form/field",
+                                            "elementTmpl":"ui/form/element/input"
+                                        },
+                                        "dataScope":"shippingAddress.city",
+                                        "label":"City",
+                                        "provider":"orderProvider",
+                                        "sortOrder":"2",
+                                        "validation":{"required-entry":true}
+                                    },
+                                    "streetLine1": {
+                                        "component":"Magento_Ui/js/form/element/abstract",
+                                        "config": {
+                                            "customScope":"shippingAddress",
+                                            "template":"ui/form/field",
+                                            "elementTmpl":"ui/form/element/input"
+                                        },
+                                        "dataScope":"shippingAddress.streetLine1",
+                                        "label":"Street Address",
+                                        "provider":"orderProvider",
+                                        "sortOrder":1,
+                                        "validation":{"required-entry":true}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "orderProvider":{
+                        "component":"uiComponent",
+                        "shippingAddress": {
+                            "postcode": "<?php echo $settings['postcode']; ?>",
+                            "region_id": "<?php echo $settings['regionId']; ?>",
+                            "region": "<?php echo $settings['region']; ?>",
+                            "country_id": "<?php echo $currentCountryId; ?>",
+                            "streetLine1": "<?php echo $settings['streetLine1']; ?>",
+                            "city": "<?php echo $settings['city']; ?>"
+                        },
+                        "baseUrl": "<?php echo $block->getUrl('purolator/shipment/changeorigin'); ?>",
+                        "order_id": "<?php echo $block->getRequest()->getParam('order_id'); ?>",
+                        "dictionaries":{
+                            "country_id": <?php echo json_encode($countryDictionary); ?>,
+                            "region_id": <?php echo json_encode($regionDictionary); ?>
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    </script>
+</div>
+

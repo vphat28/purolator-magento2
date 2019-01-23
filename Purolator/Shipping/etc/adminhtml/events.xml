@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_shipment_save_after">
+        <observer name="purolator_shipment_create_after" instance="Purolator\Shipping\Observer\CreateShipment" />
+    </event>
+    <event name="sales_order_shipment_track_save_after">
+        <observer name="purolator_track_create_after" instance="Purolator\Shipping\Observer\SaveTrack" />
+    </event>
+</config>

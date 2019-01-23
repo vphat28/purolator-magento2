@@ -1,0 +1,106 @@
+<?php
+
+if(!$block->checkIsPurolatorShipment()) {
+    return ;
+}
+
+?>
+<br>
+<?php
+$addressValidateResult = $block->checkCityPostCode();
+if ($addressValidateResult === true) {
+    ?>
+    <p style="background: #cdf5c6;padding: 10px;"><?php echo $block->escapeHtml(__('Destination address is validated with Purolator API')); ?></p>
+    <?php
+} else {
+    ?>
+    <p style="background: #f5c8c6;padding: 10px;"><?php echo $block->escapeHtml(__('Destination address is not a valid address. Please consider the shipment')); ?>
+    <br>
+        <?php echo $addressValidateResult; ?>
+    </p>
+    <?php
+}
+?>
+
+<section class="admin__page-section" style="max-width: 500px;">
+    <div class="admin__page-section-item-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Purolator Shipment Options') ?></span>
+    </div>
+    <div class="admin__page-section-item">
+
+        <? foreach ($block->getAvailableOptions() as $option): ?>
+
+            <? if ($option->ID == 'SpecialHandling' || $option->ID == 'ExpressCheque') {
+                continue;
+            } ?>
+
+            <div class="admin__field">
+                <label class="admin__field-label" for="<?= $option->ID ?>">
+                    <span><?= __($option->Description) ?></span>
+                </label>
+                <div class="admin__field-control">
+
+                <?if($option->ValueType == 'Decimal'):?>
+                    <input class="admin__control-text" type="text" name="shipment[purolator][<?= $option->ID ?>]" maxlength="255">
+                <?else:?>
+                    <select class="admin__control-select" name="shipment[purolator][<?= $option->ID ?>]" id="<?= $option->ID ?>">
+                        <? if (!empty($option->PossibleValues) && !empty($option->PossibleValues->OptionValue)): ?>
+                            <option data-title="Select" value="0">Select</option>
+                            <? foreach ($option->PossibleValues->OptionValue as $values) : ?>
+                            <option data-title="Yes" value="<?= $values->Value ?>"><?= $values->Description ?></option>
+                            <? endforeach; ?>
+                        <? endif; ?>
+                    </select>
+                <?endif;?>
+                </div>
+            </div>
+
+            <?if(!empty($option->ChildServiceOptions) && !empty($option->ChildServiceOptions->Option)):?>
+                <?$block->resetHtml();?>
+                <?=$block->renderChildOptions($option->ChildServiceOptions);?>
+            <?endif;?>
+
+        <? endforeach; ?>
+    </div>
+</section>
+<script>
+    require([
+        "jquery",
+        "Magento_Ui/js/modal/alert",
+        "prototype"
+    ], function(jQuery, alert){
+
+//<![CDATA[
+
+        jQuery( document ).ready(function() {
+
+            jQuery('#special_handling').change(function () {
+
+                if(jQuery('#special_handling').val() == 'FALSE' || jQuery('#special_handling').val() == '0') {
+                    jQuery('#special_handling_type').parent().parent().hide();
+                }
+
+                if(jQuery('#special_handling').val() == 'TRUE') {
+                    jQuery('#special_handling_type').parent().parent().show();
+                }
+            });
+
+            jQuery('#DangerousGoods').change(function () {
+
+                if(jQuery('#DangerousGoods').val() == 'false' || jQuery('#DangerousGoods').val() == '0') {
+                    jQuery('#DangerousGoodsMode').parent().parent().hide();
+                    jQuery('#DangerousGoodsClass').parent().parent().hide();
+                    jQuery('#DeclaredValue').parent().parent().hide();
+                }
+
+                if(jQuery('#DangerousGoods').val() == 'true') {
+                    jQuery('#DangerousGoodsMode').parent().parent().show();
+                    jQuery('#DangerousGoodsClass').parent().parent().show();
+                    jQuery('#DeclaredValue').parent().parent().show();
+                }
+            });
+        });
+//]]>
+
+    });
+</script>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <purolator>
+                <active>0</active>
+                <sallowspecific>0</sallowspecific>
+                <model>Purolator\Shipping\Model\Carrier\Purolator</model>
+                <name>Purolator</name>
+                <title>EShip</title>
+                <is_test>1</is_test>
+                <markup_or_discount>0</markup_or_discount>
+                <box_size>10*10*10</box_size>
+                <ratio>10</ratio>
+                <height>10</height>
+                <width>10</width>
+                <length>10</length>
+                <default_weight>1</default_weight>
+                <measure_units_length>in</measure_units_length>
+                <businessrel>Related</businessrel>
+                <ietype>Permanent</ietype>
+                <textilei>0</textilei>
+                <nafta>0</nafta>
+                <fcc>0</fcc>
+                <default_package_weight>10</default_package_weight>
+                <printertype>Thermal</printertype>
+                <customerinvoice>0</customerinvoice>
+                <type>I</type>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <supported_services>PurolatorExpress9AM,PurolatorExpress10:30AM,PurolatorExpress12PM,PurolatorExpress,PurolatorExpressEvening,PurolatorExpressEnvelope9AM,PurolatorExpressEnvelope10:30AM,PurolatorExpressEnvelope12PM,PurolatorExpressEnvelope,PurolatorExpressEnvelopeEvening,PurolatorExpressPack9AM,PurolatorExpressPack10:30AM,PurolatorExpressPack12PM,PurolatorExpressPack,PurolatorExpressPackEvening,PurolatorExpressBox9AM,PurolatorExpressBox10:30AM,PurolatorExpressBox12PM,PurolatorExpressBox,PurolatorExpressBoxEvening,PurolatorGround,PurolatorGround9AM,PurolatorGround10:30AM,PurolatorGroundEvening,PurolatorExpressU.S.,PurolatorExpressU.S.9AM,PurolatorExpressU.S.10:30AM,PurolatorExpressU.S.12:00,PurolatorExpressEnvelopeU.S.,PurolatorExpressU.S.Envelope9AM,PurolatorExpressU.S.Envelope10:30AM,PurolatorExpressU.S.Envelope12:00,PurolatorExpressPackU.S.,PurolatorExpressU.S.Pack9AM,PurolatorExpressU.S.Pack10:30AM,PurolatorExpressU.S.Pack12:00,PurolatorExpressBoxU.S.,PurolatorExpressU.S.Box9AM,PurolatorExpressU.S.Box10:30AM,PurolatorExpressU.S.Box12:00,PurolatorGroundU.S.,PurolatorExpressInternational,PurolatorExpressInternational9AM,PurolatorExpressInternational10:30AM,PurolatorExpressInternational12:00,PurolatorExpressEnvelopeInternational,PurolatorExpressInternationalEnvelope9AM,PurolatorExpressInternationalEnvelope10:30AM,PurolatorExpressInternationalEnvelope12:00,PurolatorExpressPackInternational,PurolatorExpressInternationalPack9AM,PurolatorExpressInternationalPack10:30AM,PurolatorExpressInternationalPack12:00,PurolatorExpressBoxInternational,PurolatorExpressInternationalBox9AM,PurolatorExpressInternationalBox10:30AM,PurolatorExpressInternationalBox12:00</supported_services>
+            </purolator>
+        </carriers>
+    </default>
+</config>

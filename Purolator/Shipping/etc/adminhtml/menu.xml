@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<add id="Purolator_Shipping::purolator" title="Purolator" module="Purolator_Shipping" sortOrder="10" resource="Purolator_Shipping::purolator" parent="Magento_Sales::sales"/>
+		<add id="Purolator_Shipping::purolator_shipment" title="Purolator Shipments" module="Purolator_Shipping" sortOrder="10" parent="Purolator_Shipping::purolator" action="purolator/shipment" resource="Purolator_Shipping::purolator_shipment"/>
+        <add id="Purolator_Shipping::purolator_manifest" title="Purolator Manifest" module="Purolator_Shipping" sortOrder="10" parent="Purolator_Shipping::purolator" action="purolator/manifest" resource="Purolator_Shipping::purolator_manifest"/>
+    </menu>
+</config>

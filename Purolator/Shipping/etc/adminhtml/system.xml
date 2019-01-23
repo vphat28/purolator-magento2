@@ -1,0 +1,301 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="carriers" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="purolator" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Purolator</label>
+                <field id="active" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="is_test" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10">
+                    <label>Test Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="name" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+                    <label>Method Name</label>
+                </field>
+                <field id="title" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30">
+                    <label>Method Title</label>
+                </field>
+                <field id="api_key" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="80">
+                    <label>API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="api_password" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="80">
+                    <label>API Password</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="activation_key" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="80">
+                    <label>Activation Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="account_number" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="60">
+                    <label>Account Number</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="registered_account_number" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="70">
+                    <label>Registered Account</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <group id="purolator_services" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <fieldset_css>purolator_services_fieldset</fieldset_css>
+                    <label>Purolator Services (select services you would support)</label>
+                    <field id="supported_services" translate="label" type="multiselect" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Supported Services</label>
+                        <source_model>Purolator\Shipping\Model\Adminhtml\Source\ShippingServices</source_model>
+                        <config_path>carriers/purolator/supported_services</config_path>
+                    </field>
+                    <field id="markup_specific" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Markup and Markdown Specific</label>
+                        <source_model>Purolator\Shipping\Model\Adminhtml\Source\MarkupSpecific</source_model>
+                        <config_path>carriers/purolator/markup_specific</config_path>
+                    </field>
+                    <field id="markupall_type" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>By value or percentage</label>
+                        <config_path>carriers/purolator/markupall_type</config_path>
+                        <depends>
+                            <field id="markup_specific">1</field>
+                        </depends>
+                        <source_model>Purolator\Shipping\Model\Adminhtml\Source\PercentOrValue</source_model>
+                    </field>
+                    <field id="markupall_amount" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Markup or Discount</label>
+                        <config_path>carriers/purolator/markupall_amount</config_path>
+                        <comment>Can be negative or positive, if negative all shipping rates will be discounted, if positive value all shipping costs will be increased</comment>
+                        <depends>
+                            <field id="markupall_type" separator=",">1,0</field>
+                            <field id="markup_specific">1</field>
+                        </depends>
+                    </field>
+                    <field id="markupall_fixed" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Fixed Value</label>
+                        <config_path>carriers/purolator/markupall_fixed</config_path>
+                        <comment>Fixed shipping cost</comment>
+                        <depends>
+                            <field id="markup_specific">1</field>
+                        </depends>
+                    </field>
+                    <group id="purolator_service_purolatorexpress" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                            <field id="markup_specific">2</field>
+                        </depends>
+                        <label>Purolator Express</label>
+                        <field id="markup_purolatorexpress_type" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>By Percentage or Value</label>
+                            <config_path>carriers/purolator/markup_purolatorexpress_type</config_path><source_model>Purolator\Shipping\Model\Adminhtml\Source\PercentOrValue</source_model>
+                        </field>
+                        <field id="markup_purolatorexpress_amount" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Markup or Discount</label>
+                            <config_path>carriers/purolator/markup_purolatorexpress_amount</config_path>
+                            <comment>Can be negative or positive, if negative all shipping rates will be discounted, if positive value all shipping costs will be increased</comment>
+                            <depends>
+                                <field id="markup_purolatorexpress_type" separator=",">1,0</field>
+                                <field id="markup_specific">1</field>
+                            </depends>
+                        </field>
+                        <field id="markup_purolatorexpress_fixed" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Fixed Value</label>
+                            <config_path>carriers/purolator/markup_purolatorexpress_fixed</config_path>
+                            <comment>Fixed shipping cost</comment>
+                            <depends>
+                                <field id="markup_purolatorexpress_type">2</field>
+                            </depends>
+                        </field>
+                    </group>
+                    <group id="purolator_service_purolatorground" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                            <field id="markup_specific">2</field>
+                        </depends>
+                        <label>Purolator Ground</label>
+                        <field id="markup_purolatorground_type" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>By Percentage or Value</label>
+                            <config_path>carriers/purolator/markup_purolatorground_type</config_path><source_model>Purolator\Shipping\Model\Adminhtml\Source\PercentOrValue</source_model>
+                        </field>
+                        <field id="markup_purolatorground_amount" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Markup or Discount</label>
+                            <config_path>carriers/purolator/markup_purolatorground_amount</config_path>
+                            <comment>Can be negative or positive, if negative all shipping rates will be discounted, if positive value all shipping costs will be increased</comment>
+                            <depends>
+                                <field id="markup_purolatorground_type" separator=",">1,0</field>
+                                <field id="markup_specific">1</field>
+                            </depends>
+                        </field>
+                        <field id="markup_purolatorground_fixed" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Fixed Value</label>
+                            <config_path>carriers/purolator/markup_purolatorground_fixed</config_path>
+                            <comment>Fixed shipping cost</comment>
+                            <depends>
+                                <field id="markup_purolatorground_type">2</field>
+                            </depends>
+                        </field>
+                    </group>
+                    <group id="purolator_service_purolatorexpressus" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                            <field id="markup_specific">2</field>
+                        </depends>
+                        <label>Purolator Express US</label>
+                        <field id="markup_purolatorexpressus_type" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>By Percentage or Value</label>
+                            <config_path>carriers/purolator/markup_purolatorexpressus_type</config_path><source_model>Purolator\Shipping\Model\Adminhtml\Source\PercentOrValue</source_model>
+                        </field>
+                        <field id="markup_purolatorexpressus_amount" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Markup or Discount</label>
+                            <config_path>carriers/purolator/markup_purolatorexpressus_amount</config_path>
+                            <comment>Can be negative or positive, if negative all shipping rates will be discounted, if positive value all shipping costs will be increased</comment>
+                            <depends>
+                                <field id="markup_purolatorexpressus_type" separator=",">1,0</field>
+                                <field id="markup_specific">1</field>
+                            </depends>
+                        </field>
+                        <field id="markup_purolatorexpressus_fixed" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Fixed Value</label>
+                            <config_path>carriers/purolator/markup_purolatorexpressus_fixed</config_path>
+                            <comment>Fixed shipping cost</comment>
+                            <depends>
+                                <field id="markup_purolatorexpressus_type">2</field>
+                            </depends>
+                        </field>
+                    </group>
+                    <group id="purolator_service_purolatorgroundus" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                            <field id="markup_specific">2</field>
+                        </depends>
+                        <label>Purolator Ground US</label>
+                        <field id="markup_purolatorgroundus_type" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>By Percentage or Value</label>
+                            <config_path>carriers/purolator/markup_purolatorgroundus_type</config_path><source_model>Purolator\Shipping\Model\Adminhtml\Source\PercentOrValue</source_model>
+                        </field>
+                        <field id="markup_purolatorgroundus_amount" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Markup or Discount</label>
+                            <config_path>carriers/purolator/markup_purolatorgroundus_amount</config_path>
+                            <comment>Can be negative or positive, if negative all shipping rates will be discounted, if positive value all shipping costs will be increased</comment>
+                            <depends>
+                                <field id="markup_purolatorgroundus_type" separator=",">1,0</field>
+                                <field id="markup_specific">1</field>
+                            </depends>
+                        </field>
+                        <field id="markup_purolatorgroundus_fixed" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Fixed Value</label>
+                            <config_path>carriers/purolator/markup_purolatorgroundus_fixed</config_path>
+                            <comment>Fixed shipping cost</comment>
+                            <depends>
+                                <field id="markup_purolatorgroundus_type">2</field>
+                            </depends>
+                        </field>
+                    </group>
+                    <group id="purolator_service_purolatorexpressinternational" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                            <field id="markup_specific">2</field>
+                        </depends>
+                        <label>Purolator Express International</label>
+                        <field id="markup_purolatorexpressinternational_type" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>By Percentage or Value</label>
+                            <config_path>carriers/purolator/markup_purolatorexpressinternational_type</config_path><source_model>Purolator\Shipping\Model\Adminhtml\Source\PercentOrValue</source_model>
+                        </field>
+                        <field id="markup_purolatorexpressinternational_amount" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Markup or Discount</label>
+                            <config_path>carriers/purolator/markup_purolatorexpressinternational_amount</config_path>
+                            <comment>Can be negative or positive, if negative all shipping rates will be discounted, if positive value all shipping costs will be increased</comment>
+                            <depends>
+                                <field id="markup_purolatorexpressinternational_type" separator=",">1,0</field>
+                                <field id="markup_specific">1</field>
+                            </depends>
+                        </field>
+                        <field id="markup_purolatorexpressinternational_fixed" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Fixed Value</label>
+                            <config_path>carriers/purolator/markup_purolatorexpressinternational_fixed</config_path>
+                            <comment>Fixed shipping cost</comment>
+                            <depends>
+                                <field id="markup_purolatorexpressinternational_type">2</field>
+                            </depends>
+                        </field>
+                    </group>
+                </group>
+                <field id="box_size" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="130">
+                    <label>Default Box Size ( W*H*L)</label>
+                    <config_path>carriers/purolator/box_size</config_path>
+                </field>
+                <field id="default_package_weight" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="131">
+                    <label>Default Package Weight</label>
+                </field>
+                <field id="ratio" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="140">
+                    <label>Packing Ratio (%)</label>
+                </field>
+                <field id="height" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="150">
+                    <label>Default Height</label>
+                </field>
+                <field id="width" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="160">
+                    <label>Default Width</label>
+                </field>
+                <field id="length" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="170">
+                    <label>Default Length</label>
+                </field>
+                <field id="default_weight" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="171">
+                    <label>Default Weight</label>
+                </field>
+                <field id="measure_units_length" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="172">
+                    <label>Measure Units Length</label>
+                    <source_model>Purolator\Shipping\Model\Source\MeasureUnitsLength</source_model>
+                </field>
+                <field id="businessrel" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="190">
+                    <label>Business Relationship</label>
+                    <source_model>Purolator\Shipping\Model\Source\BusinessRelationship</source_model>
+                </field>
+                <field id="ietype" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="210">
+                    <label>Import Export Type</label>
+                    <source_model>Purolator\Shipping\Model\Source\ImportExportType</source_model>
+                </field>
+                <field id="harmcode" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="230">
+                    <label>Default Harmonized Code</label>
+                </field>
+                <field id="com" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="240">
+                    <label>Default Country of Manufacturer</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+                <field id="textilei" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="250">
+                    <label>Default Textile Indicator</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="textilem" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="260">
+                    <label>Default Textile Manufacturer</label>
+                </field>
+                <field id="nafta" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="270">
+                    <label>Default NAFTA Document Indicator</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fcc" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="280">
+                    <label>Default FCC Document Indicator</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="printertype" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="320">
+                    <label>Documents for Thermal Printer</label>
+                    <source_model>Purolator\Shipping\Model\Source\PrinterType</source_model>
+                </field>
+                <field id="international_shipments" translate="label" sortOrder="330" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>International Shipments</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <attribute type="shared">1</attribute>
+                </field>
+                <field id="customerinvoice" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="340">
+                    <label>Create customs invoice documents</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="billdutiestoparty" translate="label"  type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="350">
+                    <label>Bill Duties To Party</label>
+                    <source_model>Purolator\Shipping\Model\Source\BillDutiesToParty</source_model>
+                    <depends>
+                        <field id="customerinvoice">1</field>
+                    </depends>
+                </field>
+                <field id="dutyccy" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="360">
+                    <label>Duty Currency</label>
+                    <source_model>Purolator\Shipping\Model\Source\DutyCurrency</source_model>
+                    <depends>
+                        <field id="customerinvoice">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

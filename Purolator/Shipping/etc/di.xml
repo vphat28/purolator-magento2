@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="purolator_sales_order_shipment_grid_data_source" xsi:type="string">Purolator\Shipping\Model\ResourceModel\PurolatorShipment\Grid\Collection</item>
+                <item name="ch_purolator_manifest_listing_data_source" xsi:type="string">Purolator\Shipping\Model\ResourceModel\PurolatorManifest\Grid\Collection</item>
+                <item name="purolator_sales_order_shipment_grid_create_data_source" xsi:type="string">Purolator\Shipping\Model\ResourceModel\Order\Shipment\GridCreate\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
