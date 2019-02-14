@@ -52,20 +52,20 @@ class TrackingService
             } else {
                 $location = 'https://webservices.purolator.com/PWS/V1/Tracking/TrackingService.asmx';
             }
+
+            //Set the parameters for the Non-WSDL mode SOAP communication with your Development/Production credentials
+            $client = new \SoapClient($location . "?wsdl",
+                array(
+                    'trace' => true,
+                    'location' => $location,
+                    'uri' => "http://purolator.com/pws/datatypes/v1",
+                    'login' => $this->helper->getAccessKey(),
+                    'password' => $this->helper->getAPIKeyPassword(),
+                )
+            );
         } catch (\Exception $e) {
             return null;
         }
-
-        //Set the parameters for the Non-WSDL mode SOAP communication with your Development/Production credentials
-        $client = new \SoapClient($location . "?wsdl",
-            array(
-                'trace' => true,
-                'location' => $location,
-                'uri' => "http://purolator.com/pws/datatypes/v1",
-                'login' => $this->helper->getAccessKey(),
-                'password' => $this->helper->getAPIKeyPassword(),
-            )
-        );
         //Define the SOAP Envelope Headers
         $headers[] = new \SoapHeader ('http://purolator.com/pws/datatypes/v1',
             'RequestContext',

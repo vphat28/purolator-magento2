@@ -18,14 +18,6 @@
                 <field id="title" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30">
                     <label>Method Title</label>
                 </field>
-                <field id="api_key" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="80">
-                    <label>API Key</label>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                </field>
-                <field id="api_password" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="80">
-                    <label>API Password</label>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                </field>
                 <field id="activation_key" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="80">
                     <label>Activation Key</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>

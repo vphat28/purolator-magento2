@@ -21,11 +21,13 @@ class Data
     const TEST_ACCOUNT_NUMBER = '9999999999';
     const TEST_REGISTERED_ACCOUNT_NUMBER = '9999999999';
 
-    const COLLINSHARPER_ACCESS_KEY = '32ba25d97c4240c181322956fd19312a';
-    const COLLINSHARPER_ACCESS_PASSWORD = 'J*ddddOh ';
 
-    const TEST_COLLINSHARPER_ACCESS_KEY = '42942e2dd2dc4eceb7c86dd69e195c38';
-    const TEST_COLLINSHARPER_ACCESS_PASSWORD = '3^t#f1;/';
+    const COLLINSHARPER_ACCESS_KEY = '75db2bdc474547b7a91cdcc54e1b3465';
+    const COLLINSHARPER_ACCESS_PASSWORD = 'dOnTYSqD';
+
+    const TEST_COLLINSHARPER_ACCESS_KEY = 'a93117b3ced548858d29ad8438a6bc8b';
+    const TEST_COLLINSHARPER_ACCESS_PASSWORD = 'Mc+M.1}W';
+    const TEST_USER_TOKEN = '3fa7debc-e2af-4f03-b2de-5589c8f8b2e3';
 
     const PUROLATOR_CONFIG_PATH = 'carriers/purolator';
 
@@ -141,9 +143,9 @@ class Data
     {
         if ($this->isTestMode()) {
             return self::TEST_COLLINSHARPER_ACCESS_PASSWORD;
+        } else {
+            return self::COLLINSHARPER_ACCESS_PASSWORD;
         }
-
-        return $this->encryptor->decrypt($this->scopeConfig->getValue('carriers/purolator/api_password', ScopeInterface::SCOPE_STORE));
     }
 
     /**
@@ -164,6 +166,10 @@ class Data
      */
     public function getAPIActivationKey()
     {
+        if ($this->isTestMode()) {
+            return self::TEST_USER_TOKEN;
+        }
+
         return $this->encryptor->decrypt($this->scopeConfig->getValue(self::PRODUCTION_ACTIVATION_KEY, ScopeInterface::SCOPE_STORE));
     }
 
@@ -175,9 +181,9 @@ class Data
     {
         if ($this->isTestMode()) {
             return self::TEST_COLLINSHARPER_ACCESS_KEY;
+        } else {
+            return self::COLLINSHARPER_ACCESS_KEY;
         }
-
-        return $this->encryptor->decrypt($this->scopeConfig->getValue('carriers/purolator/api_key', ScopeInterface::SCOPE_STORE));
     }
 
     /**
