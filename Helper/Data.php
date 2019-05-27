@@ -661,23 +661,26 @@ class Data
      */
     public function checkResponse($response)
     {
+        $errorString = '';
         if (!empty($response->ResponseInformation->Errors->Error)) {
 
             foreach ($response->ResponseInformation->Errors as $error) {
 
                 if (!is_array($error) && !empty($error->Description) ) {
                     $this->messageManager->addErrorMessage($error->Description);
+                    $errorString .= $error->Description;
                     break;
                 }
 
                 if (is_array($error)) {
                     foreach ($error as $item) {
+                        $errorString .= $item->Description;
                         $this->messageManager->addErrorMessage($item->Description);
                     }
                 }
             }
 
-            throw new \Magento\Framework\Exception\LocalizedException(__('Shipment error'));
+            throw new \Magento\Framework\Exception\LocalizedException(__($errorString));
         }
     }
 
