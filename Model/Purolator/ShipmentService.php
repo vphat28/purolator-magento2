@@ -570,8 +570,11 @@ class ShipmentService
 
                 if (!empty($option->ID) && !empty($this->getRequest()->getData($option->ID))) {
 
-                    /*
+
                     if ($option->ID == 'DangerousGoods' && !empty($this->getRequest()->getData('DangerousGoods'))) {
+
+                        // skip dangerous
+                        continue;
 
                         $this->requestData->Shipment->PackageInformation->DangerousGoodsDeclarationDocumentIndicator = true;
 
@@ -596,7 +599,7 @@ class ShipmentService
 
                         continue;
                     }
-                    */
+
 
                     $this->requestData->Shipment->PackageInformation->OptionsInformation->Options->OptionIDValuePair[$i] = new \stdClass();
                     $this->requestData->Shipment->PackageInformation->OptionsInformation->Options->OptionIDValuePair[$i]->ID = $option->ID;
