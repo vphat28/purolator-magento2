@@ -60,7 +60,10 @@ class Batchshipment extends \Magento\Shipping\Controller\Adminhtml\Order\Shipmen
 
                 $shipment->register();
 
-                $shipment->getOrder()->setCustomerNoteNotify(!empty(@$data['send_email']));
+                if (isset($data['send_email']) && !empty($data['send_email'])) {
+                    $shipment->getOrder()->setCustomerNoteNotify(true);
+                }
+
 
                 $this->_saveShipment($shipment);
                 $this->registry->unregister('current_shipment');
