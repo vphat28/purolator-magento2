@@ -170,6 +170,8 @@ class EstimateService
         //Execute the request and capture the response
          $response = $this->soapclient->GetFullEstimate($request);
 
+         file_put_contents(BP . '/var/log/purolator.log', json_encode($response), FILE_APPEND);
+
         return $response;
     }
 

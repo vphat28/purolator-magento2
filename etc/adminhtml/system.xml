@@ -205,8 +205,10 @@
                     </group>
                 </group>
                 <field id="box_size" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="130">
-                    <label>Default Box Size ( W*H*L)</label>
+                    <label>Default Box Siz50gite ( W*H*L)</label>
                     <config_path>carriers/purolator/box_size</config_path>
+                    <comment> <![CDATA[<strong style="color:red">Please specify your default size of your package boxes. For example 10*10*10.</strong>]]></comment>
+                    <validate>required-entry</validate>
                 </field>
                 <field id="default_package_weight" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="131">
                     <label>Default Package Weight</label>
