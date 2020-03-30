@@ -17,7 +17,7 @@
                 <item name="name" xsi:type="string">shipment</item>
                 <item name="label" xsi:type="string" translate="true">Purolator Shipments</item>
                 <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">*/purolator/shipment</item>
+                <item name="url" xsi:type="string">purolator/shipment</item>
             </item>
         </item>
     </argument>

@@ -33,7 +33,7 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
     protected function _renderFiltersBefore()
     {
         $joinTable = $this->getTable('sales_shipment_grid');
-        $this->getSelect()->join($joinTable.' as sales_shipment_grid','main_table.magento_shipment_id = sales_shipment_grid.entity_id', array('*'));
+        $this->getSelect()->join($joinTable.' as sales_shipment_grid','main_table.magento_shipment_id = sales_shipment_grid.entity_id', array('*'))->columns(['shipment_created_at' => 'main_table.created_at']);
         parent::_renderFiltersBefore();
     }
 }
