@@ -64,10 +64,10 @@ class Options extends \Magento\Framework\View\Element\Template
                 $order->getShippingAddress()->getPostcode()
             );
 
-            if (@empty($validationResult->ResponseInformation->Errors->Error->Code)) {
+            if (isset($validationResult->ResponseInformation->Errors->Error->Code) && empty($validationResult->ResponseInformation->Errors->Error->Code)) {
                 return true;
             } else {
-                return @$validationResult->SuggestedAddresses->SuggestedAddress->ResponseInformation->Errors->Error->Description;
+                return $validationResult->SuggestedAddresses->SuggestedAddress->ResponseInformation->Errors->Error->Description;
             }
         } else return true;
     }
