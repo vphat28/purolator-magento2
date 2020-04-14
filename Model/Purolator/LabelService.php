@@ -2,6 +2,8 @@
 
 namespace Purolator\Shipping\Model\Purolator;
 
+use Purolator\Shipping\Model\Logger;
+
 class LabelService
 {
     const SHIPPING_DOCUMENT_REQUEST_TYPE = 'ShippingDocumentsService';
@@ -15,18 +17,23 @@ class LabelService
      * @var Request
      */
     protected $purolatorRequest;
+    /** @var Logger */
+    protected $logger;
 
     /**
      * LabelService constructor.
      * @param \Purolator\Shipping\Helper\Data $helper
+     * @param Logger $logger,
      * @param Request $request
      */
     public function __construct(
         \Purolator\Shipping\Helper\Data $helper,
+        Logger $logger,
         Request $request
     )
     {
         $this->helper = $helper;
+        $this->logger = $logger;
         $this->purolatorRequest = $request;
 
     }
@@ -110,12 +117,14 @@ class LabelService
     public function getContent($response)
     {
         if (empty($response->Documents->Document->DocumentDetails->DocumentDetail->URL)) {
-            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try again"));
+            $this->logger->debug("Error in label service" . json_encode($response));
+            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try label service again"));
         }
 
         $content = file_get_contents($response->Documents->Document->DocumentDetails->DocumentDetail->URL);
         if (empty($content)) {
-            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try again"));
+            $this->logger->debug("Error in label service" . json_encode($response));
+            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try label service again"));
         }
 
         return $content;

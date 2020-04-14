@@ -80,12 +80,12 @@ class DeclarationService
     public function getContent($response)
     {
         if (empty($response->Documents->Document->DocumentDetails->DocumentDetail->URL)) {
-            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try again"));
+            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try declaration service again"));
         }
 
         $content = file_get_contents($response->Documents->Document->DocumentDetails->DocumentDetail->URL);
         if (empty($content)) {
-            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try again"));
+            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try declaration service again"));
         }
 
         return $content;
