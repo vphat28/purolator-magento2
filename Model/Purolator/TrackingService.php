@@ -11,7 +11,7 @@ class TrackingService
     /** @var \SoapClient */
     protected $soapclient = null;
 
-    /** @var LoggerInterface */
+    /** @var \Purolator\Shipping\Model\Logger */
     private $logger;
 
     /** @var Data */
@@ -22,12 +22,12 @@ class TrackingService
 
     /**
      * TrackingService constructor.
-     * @param LoggerInterface $logger
+     * @param \Purolator\Shipping\Model\Logger $logger
      * @param Data $helper
      * @param DataObjectFactory $objectFactory
      */
     public function __construct(
-        LoggerInterface $logger,
+        \Purolator\Shipping\Model\Logger $logger,
         Data $helper,
         DataObjectFactory $objectFactory
     ) {
@@ -96,9 +96,14 @@ class TrackingService
             $request->PINs->PIN->Value = $number;
 
             $trackingProgress = $this->soapclient->TrackPackagesByPin($request);
-            $trackingInfoList = $trackingProgress->TrackingInformationList->TrackingInformation->Scans->Scan;
-            $trackingDetails = [];
+            $this->logger->debug('Tracking info ' . json_encode($trackingProgress));
+            if (isset($trackingProgress->TrackingInformationList->TrackingInformation->Scans->Scan)) {
+                $trackingInfoList = $trackingProgress->TrackingInformationList->TrackingInformation->Scans->Scan;
+            } else {
+                $trackingInfoList = [];
+            }
 
+            $trackingDetails = [];
             foreach ($trackingInfoList as $trackInfo) {
                 $trackingDetails[] = [
                     'deliverydate' => $trackInfo->ScanDate,
@@ -114,7 +119,7 @@ class TrackingService
 
             return $dataObject;
         } catch (\Exception $e) {
-            $this->logger->error(__FILE__ . ' ' . __LINE__ . ' ' .$e->getMessage());
+            file_put_contents(BP . '/var/log/purolator.log', PHP_EOL . __FILE__ . ' ' . __LINE__ . ' ' .$e->getMessage() . PHP_EOL, FILE_APPEND);
         }
     }
 }

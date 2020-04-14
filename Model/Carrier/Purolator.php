@@ -133,7 +133,7 @@ class Purolator extends AbstractCarrier implements CarrierInterface
     public function getTrackingInfo($number)
     {
         $response = $this->trackingService->getTrackingByNumber($number);
-        var_dump($number);
+
         return $response;
     }
 
