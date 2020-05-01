@@ -118,13 +118,13 @@ class LabelService
     {
         if (empty($response->Documents->Document->DocumentDetails->DocumentDetail->URL)) {
             $this->logger->debug("Error in label service" . json_encode($response));
-            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try label service again"));
+            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try label service again. URL is " . $response->Documents->Document->DocumentDetails->DocumentDetail->URL));
         }
 
         $content = file_get_contents($response->Documents->Document->DocumentDetails->DocumentDetail->URL);
         if (empty($content)) {
             $this->logger->debug("Error in label service" . json_encode($response));
-            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try label service again"));
+            throw new \Magento\Framework\Exception\LocalizedException(__("File content empty ! , Please try label service again. URL is " . $response->Documents->Document->DocumentDetails->DocumentDetail->URL));
         }
 
         return $content;
