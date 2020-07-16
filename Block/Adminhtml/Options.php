@@ -47,9 +47,9 @@ class Options extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return bool|string
+     * @return string|null
      */
-    public function checkCityPostCode()
+    public function getErrorValidationDescription(): ?string
     {
         $shipment = $this->registry->registry('current_shipment');
 
@@ -64,12 +64,14 @@ class Options extends \Magento\Framework\View\Element\Template
                 $order->getShippingAddress()->getPostcode()
             );
 
-            if (isset($validationResult->ResponseInformation->Errors->Error->Code) && empty($validationResult->ResponseInformation->Errors->Error->Code)) {
-                return true;
-            } else {
+            if (isset($validationResult->ResponseInformation->Errors)
+                && !empty((array) $validationResult->ResponseInformation->Errors)
+            ) {
                 return $validationResult->SuggestedAddresses->SuggestedAddress->ResponseInformation->Errors->Error->Description;
             }
-        } else return true;
+        }
+
+        return null;
     }
 
     /**

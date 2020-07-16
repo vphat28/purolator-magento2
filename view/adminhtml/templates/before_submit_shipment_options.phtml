@@ -7,16 +7,16 @@ if(!$block->checkIsPurolatorShipment()) {
 ?>
 <br>
 <?php
-$addressValidateResult = $block->checkCityPostCode();
-if ($addressValidateResult === true) {
+$addressValidateResult = $block->getErrorValidationDescription();
+if ($addressValidateResult === null) {
     ?>
-    <p style="background: #cdf5c6;padding: 10px;"><?php echo $block->escapeHtml(__('Destination address is validated with Purolator API')); ?></p>
+    <p style="background: #cdf5c6;padding: 10px;"><?= $block->escapeHtml(__('Destination address is validated with Purolator API')); ?></p>
     <?php
 } else {
     ?>
-    <p style="background: #f5c8c6;padding: 10px;"><?php echo $block->escapeHtml(__('Destination address is not a valid address. Please consider the shipment')); ?>
-    <br>
-        <?php echo $addressValidateResult; ?>
+    <p style="background: #f5c8c6;padding: 10px;"><?= $block->escapeHtml(__('Destination address is not a valid address. Please consider the shipment')); ?>
+        <br>
+        <?= $block->escapeHtml(__($addressValidateResult)); ?>
     </p>
     <?php
 }
