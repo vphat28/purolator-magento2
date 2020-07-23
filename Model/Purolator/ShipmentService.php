@@ -540,37 +540,29 @@ class ShipmentService
             foreach ($service->Options->Option as $option) {
 
                 if (!empty($option->ID) && $option->ID == 'SpecialHandling' && !empty($this->getRequest()->getPackagingType())) {
-
-                    $cnt = count($this->requestData->Shipment->PackageInformation->PiecesInformation->Piece);
-
-                    if($cnt == 1) {
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece->Options = new \stdClass();
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece->Options->OptionIDValuePair[0] = new \stdClass();
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece->Options->OptionIDValuePair[0]->ID = "SpecialHandling";
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece->Options->OptionIDValuePair[0]->Value = "true";
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece->Options->OptionIDValuePair[1] = new \stdClass();
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece->Options->OptionIDValuePair[1]->ID = "SpecialHandlingType";
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece->Options->OptionIDValuePair[1]->Value = $this->getRequest()->getPackagingType();
-                        continue;
+                    $totalPieces = $this->requestData->Shipment->PackageInformation->TotalPieces;
+                    $optionIdValuePair = (object) [
+                        (object) [
+                            'ID' => 'SpecialHandling',
+                            'Value' => 'true',
+                        ],
+                        (object) [
+                            'ID' => 'SpecialHandlingType',
+                            'Value' => $this->getRequest()->getPackagingType(),
+                        ],
+                    ];
+                    if ($totalPieces == 1) {
+                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece->Options =
+                            $optionIdValuePair;
+                    } else {
+                        for($c = 0; $c < $totalPieces; $c++ ) {
+                            $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece[$c]->Options =
+                                $optionIdValuePair;
+                        }
                     }
-
-                    for($c = 0; $c < $cnt; $c++ ) {
-
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece[$c]->Options = new \stdClass();
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece[$c]->Options->OptionIDValuePair[0] = new \stdClass();
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece[$c]->Options->OptionIDValuePair[0]->ID = "SpecialHandling";
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece[$c]->Options->OptionIDValuePair[0]->Value = "true";
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece[$c]->Options->OptionIDValuePair[1] = new \stdClass();
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece[$c]->Options->OptionIDValuePair[1]->ID = "SpecialHandlingType";
-                        $this->requestData->Shipment->PackageInformation->PiecesInformation->Piece[$c]->Options->OptionIDValuePair[1]->Value = $this->getRequest()->getPackagingType();
-                    }
-
-                    continue;
                 }
 
                 if (!empty($option->ID) && !empty($this->getRequest()->getData($option->ID))) {
-
-
                     if ($option->ID == 'DangerousGoods' && !empty($this->getRequest()->getData('DangerousGoods'))) {
 
                         // skip dangerous
