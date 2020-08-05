@@ -14,11 +14,11 @@ class MeasureUnitsLength implements ArrayInterface
         return [
             [
                 'value' => 'in',
-                'label' => __('Inch'),
+                'label' => __('Inch and Pound'),
             ],
             [
                 'value' => 'cm',
-                'label' => __('Centimeter'),
+                'label' => __('Centimeter and Kilogram'),
             ],
         ];
     }

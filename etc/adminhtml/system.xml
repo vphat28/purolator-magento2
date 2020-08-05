@@ -26,10 +26,6 @@
                     <label>Account Number</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
-                <field id="registered_account_number" translate="label" type="obscure" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="70">
-                    <label>Registered Account</label>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                </field>
                 <group id="purolator_services" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
                     <fieldset_css>purolator_services_fieldset</fieldset_css>
                     <label>Purolator Services (select services you would support)</label>
@@ -229,7 +225,7 @@
                     <label>Default Weight</label>
                 </field>
                 <field id="measure_units_length" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="172">
-                    <label>Measure Units Length</label>
+                    <label>Measure Units</label>
                     <source_model>Purolator\Shipping\Model\Source\MeasureUnitsLength</source_model>
                 </field>
                 <field id="businessrel" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="190">

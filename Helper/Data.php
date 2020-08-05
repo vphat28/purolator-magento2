@@ -11,6 +11,7 @@ class Data
 {
     const TEST_MODE_CONFIG_PATH = 'carriers/purolator/is_test';
     const ACTIVATE_CONFIG_PATH = 'carriers/purolator/activate';
+    const MEASURE_UNIT_CONFIG_PATH = 'carriers/purolator/measure_units_length';
 
     const PRODUCTION_API_KEY_PASSWORD = 'carriers/purolator/api_key_password';
     const PRODUCTION_ACCOUNT_NUMBER = 'carriers/purolator/account_number';
@@ -196,7 +197,7 @@ class Data
             return self::TEST_REGISTERED_ACCOUNT_NUMBER;
         }
 
-        return $this->encryptor->decrypt($this->scopeConfig->getValue(self::PRODUCTION_REGISTERED_ACCOUNT_NUMBER,ScopeInterface::SCOPE_STORE));
+        return $this->getAPIAccountNumber();
     }
 
     /**
@@ -576,10 +577,10 @@ class Data
      */
     public function getWeightMeasureUnit()
     {
-        if ($this->scopeConfig->getValue('general/locale/weight_unit', ScopeInterface::SCOPE_STORE) == 'kgs') {
-            return 'kg';
-        } else {
+        if ($this->scopeConfig->getValue(self::MEASURE_UNIT_CONFIG_PATH, ScopeInterface::SCOPE_STORE) == 'in') {
             return 'lb';
+        } else {
+            return 'kg';
         }
     }
 
