@@ -66,7 +66,7 @@ foreach ($countryCollection as $country) {
                                             "initialOptions":"index = orderProvider:dictionaries.country_id",
                                             "setOptions":"index = orderProvider:dictionaries.country_id"
                                         },
-                                        "value":"<?=$block->escapeJs($currentCountryId);?>"
+                                        "value":"<?php echo $block->escapeJs($currentCountryId);?>"
                                     },
                                     "postcode": {
                                         "component":"Magento_Ui/js/form/element/post-code",

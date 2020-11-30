@@ -10,13 +10,13 @@ if(!$block->checkIsPurolatorShipment()) {
 $addressValidateResult = $block->getErrorValidationDescription();
 if ($addressValidateResult === null) {
     ?>
-    <p style="background: #cdf5c6;padding: 10px;"><?= $block->escapeHtml(__('Destination address is validated with Purolator API')); ?></p>
+    <p style="background: #cdf5c6;padding: 10px;"><?php echo  $block->escapeHtml(__('Destination address is validated with Purolator API')); ?></p>
     <?php
 } else {
     ?>
-    <p style="background: #f5c8c6;padding: 10px;"><?= $block->escapeHtml(__('Destination address is not a valid address. Please consider the shipment')); ?>
+    <p style="background: #f5c8c6;padding: 10px;"><?php echo  $block->escapeHtml(__('Destination address is not a valid address. Please consider the shipment')); ?>
         <br>
-        <?= $block->escapeHtml(__($addressValidateResult)); ?>
+        <?php echo  $block->escapeHtml(__($addressValidateResult)); ?>
     </p>
     <?php
 }
@@ -24,43 +24,43 @@ if ($addressValidateResult === null) {
 
 <section class="admin__page-section" style="max-width: 500px;">
     <div class="admin__page-section-item-title">
-        <span class="title"><?= /* @escapeNotVerified */ __('Purolator Shipment Options') ?></span>
+        <span class="title"><?php echo  /* @escapeNotVerified */ __('Purolator Shipment Options') ?></span>
     </div>
     <div class="admin__page-section-item">
 
-        <? foreach ($block->getAvailableOptions() as $option): ?>
+        <?php foreach ($block->getAvailableOptions() as $option): ?>
 
-            <? if ($option->ID == 'SpecialHandling' || $option->ID == 'ExpressCheque') {
+            <?php if ($option->ID == 'SpecialHandling' || $option->ID == 'ExpressCheque') {
                 continue;
             } ?>
 
             <div class="admin__field">
-                <label class="admin__field-label" for="<?= $option->ID ?>">
-                    <span><?= __($option->Description) ?></span>
+                <label class="admin__field-label" for="<?php echo  $option->ID ?>">
+                    <span><?php echo  __($option->Description) ?></span>
                 </label>
                 <div class="admin__field-control">
 
-                <?if($option->ValueType == 'Decimal'):?>
-                    <input class="admin__control-text" type="text" name="shipment[purolator][<?= $option->ID ?>]" maxlength="255">
-                <?else:?>
-                    <select class="admin__control-select" name="shipment[purolator][<?= $option->ID ?>]" id="<?= $option->ID ?>">
-                        <? if (!empty($option->PossibleValues) && !empty($option->PossibleValues->OptionValue)): ?>
+                <?php if($option->ValueType == 'Decimal'):?>
+                    <input class="admin__control-text" type="text" name="shipment[purolator][<?php echo  $option->ID ?>]" maxlength="255">
+                <?php else:?>
+                    <select class="admin__control-select" name="shipment[purolator][<?php echo  $option->ID ?>]" id="<?php echo  $option->ID ?>">
+                        <?php if (!empty($option->PossibleValues) && !empty($option->PossibleValues->OptionValue)): ?>
                             <option data-title="Select" value="0">Select</option>
-                            <? foreach ($option->PossibleValues->OptionValue as $values) : ?>
-                            <option data-title="Yes" value="<?= $values->Value ?>"><?= $values->Description ?></option>
-                            <? endforeach; ?>
-                        <? endif; ?>
+                            <?php foreach ($option->PossibleValues->OptionValue as $values) : ?>
+                            <option data-title="Yes" value="<?php echo $values->Value ?>"><?php echo $values->Description ?></option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
-                <?endif;?>
+                <?php endif; ?>
                 </div>
             </div>
 
-            <?if(!empty($option->ChildServiceOptions) && !empty($option->ChildServiceOptions->Option)):?>
-                <?$block->resetHtml();?>
-                <?=$block->renderChildOptions($option->ChildServiceOptions);?>
-            <?endif;?>
+            <?php if(!empty($option->ChildServiceOptions) && !empty($option->ChildServiceOptions->Option)):?>
+                <?php $block->resetHtml();?>
+                <?php echo $block->renderChildOptions($option->ChildServiceOptions);?>
+            <?php endif;?>
 
-        <? endforeach; ?>
+        <?php endforeach; ?>
     </div>
 </section>
 <script>
