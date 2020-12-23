@@ -333,12 +333,14 @@ class ShipmentService
     protected function setSenderInformation()
     {
         $storeInformation = $this->helper->getStoreInformation();
+        $saleEmail = $this->helper->getSaleEmail($this->getShipment()->getStoreId());
+        $saleName = $this->helper->getSaleName($this->getShipment()->getStoreId());
 
         $this->requestData->Shipment = new \stdClass();
         $this->requestData->Shipment->SenderInformation = new \stdClass();
         $this->requestData->Shipment->SenderInformation->Address = new \stdClass();
         $this->requestData->Shipment->SenderInformation->TaxNumber = $storeInformation['merchant_vat_number'];
-        $this->requestData->Shipment->SenderInformation->Address->Name = substr($this->getRequest()->getShipperContactPersonName(), 0, 30);
+        $this->requestData->Shipment->SenderInformation->Address->Name = substr($saleName . ' ' . $saleEmail, 0, 30);
         $this->requestData->Shipment->SenderInformation->Address->Company = substr($this->getRequest()->getShipperContactCompanyName(), 30, 30);
         $this->requestData->Shipment->SenderInformation->Address->StreetNumber = substr($this->getRequest()->getData('shipper_address_street_1'), 0, 6);
         $this->requestData->Shipment->SenderInformation->Address->StreetName = substr($this->getRequest()->getShipperAddressStreet(), 0, 30);

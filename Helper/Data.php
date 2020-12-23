@@ -999,4 +999,12 @@ class Data
 
         return $countryCodes[$countryCode];
     }
+
+    public function getSaleEmail($store = null) {
+    	return $this->scopeConfig->getValue('trans_email/ident_sales/email', ScopeInterface::SCOPE_STORES, $store);
+    }
+
+    public function getSaleName($store = null) {
+    	return $this->scopeConfig->getValue('trans_email/ident_sales/name', ScopeInterface::SCOPE_STORES, $store);
+    }
 }
